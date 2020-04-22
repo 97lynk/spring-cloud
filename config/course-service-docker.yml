@@ -1,14 +1,14 @@
 spring:
   datasource:
-    password: awhjw
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/course_db_dev?createDatabaseIfNotExist=true&useSSL=false
+    password: ${DB_PASSWORD:awhjw}
+    username: ${DB_USER:postgres}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:course_db}?createDatabaseIfNotExist=true&useSSL=false
     jpa.hibernate.ddl-auto: update
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
   instance:
     preferIpAddress: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

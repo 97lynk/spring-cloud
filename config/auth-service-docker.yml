@@ -1,14 +1,19 @@
 spring:
   datasource:
-    password: awhjw
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/course_db_dev?createDatabaseIfNotExist=true&useSSL=false
-    jpa.hibernate.ddl-auto: update
+    password: ${DB_PASSWORD:awhjw}
+    username: ${DB_USER:postgres}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:oauth2}?createDatabaseIfNotExist=true&useSSL=false
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+
+server:
+  port: 7070
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
   instance:
     preferIpAddress: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -22,7 +27,7 @@ management:
 
 security:
   oauth2:
-    resource:
+    authorization:
       jwt:
         key-store: classpath:/key-for-jwt.jks
         key-password: P@ss
