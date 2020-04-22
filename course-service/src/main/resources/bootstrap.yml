@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 'course-service'
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:8888}
+      fail-fast: true
+      retry:
+        max-attempts: 10
+
+  flyway:
+    locations: classpath:/db-migrate
