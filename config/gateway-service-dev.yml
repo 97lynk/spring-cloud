@@ -16,6 +16,7 @@ management:
   endpoint.health.show-details: always
 
 zuul.routes:
+  sensitiveHeaders: Cookie,Set-Cookie,Authorization
   course-service:
     path: /course-service/**
     url: http://localhost:8081
