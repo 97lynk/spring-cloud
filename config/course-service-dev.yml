@@ -28,3 +28,5 @@ security:
         key-password: P@ss
         key-alias: aliasname
         key-store-password: pAss
+
+server.port: 8081
