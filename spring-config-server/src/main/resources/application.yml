@@ -18,7 +18,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/97lynk/spring-cloud/config
+          uri: https://github.com/97lynk/spring-cloud
+          basedir: /config
         native:
           search-locations: file:./config
 
