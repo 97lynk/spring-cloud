@@ -1,0 +1,30 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+spring:
+  application:
+    name: 'config-service'
+  profiles:
+    active: native, git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/97lynk/spring-cloud/config
+        native:
+          search-locations: file:./config
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint.health.show-details: always

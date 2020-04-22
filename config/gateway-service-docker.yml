@@ -1,0 +1,38 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server.port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint.health.show-details: always
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-store: classpath:/key-for-jwt.jks
+        key-password: P@ss
+        key-alias: aliasname
+        key-store-password: pAss
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    auth-service:
+      path: /auth-service/**
+      serviceId: auth-service
+    course-service:
+      path: /course-service/**
+      serviceId: course-service
+    student-service:
+      path: /student-service/**
+      serviceId: student-service
