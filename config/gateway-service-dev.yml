@@ -21,5 +21,6 @@ zuul.routes:
     path: /course-service/**
     url: http://localhost:8081
   auth-service:
+    sensitiveHeaders: Cookie,Set-Cookie
     path: /auth-service/**
     url: http://localhost:7070
