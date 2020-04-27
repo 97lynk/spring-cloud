@@ -9,8 +9,12 @@
     <packaging>pom</packaging>
 
     <modules>
-<!--        <module>library</module>-->
-<!--        <module>application</module>-->
+        <module>spring-eureka-server</module>
+        <module>spring-config-server</module>
+        <module>spring-cloud-manager</module>
+        <module>course-service</module>
+        <module>spring-auth-server</module>
+        <module>spring-cloud-gateway</module>
     </modules>
 
 </project>
