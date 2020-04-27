@@ -17,6 +17,6 @@ management:
 
 zuul.routes:
   course-service:
-    sensitiveHeaders: Cookie,Set-Cookie,Authorization
+    sensitiveHeaders: Cookie,Set-Cookie
     path: /course-service/**
     url: http://localhost:8081
