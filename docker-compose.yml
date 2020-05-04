@@ -1,0 +1,168 @@
+version: '3'
+services:
+    ###
+    postgres-service:
+        image: postgres:9.6.17
+        container_name: postgres-server
+        ports:
+            - 5432:5432
+        environment: 
+            - POSTGRES_PASSWORD=awhjw
+            - POSTGRES_DB=oauth2
+        volumes: 
+            - postgres-data:/var/lib/postgresql/data
+        networks: 
+            - my-spring-cloud
+
+    ####
+    sc-discovery-service:
+        image: openjdk-with-wfi:1.0
+        container_name: sc-eureka-server
+        ports: 
+            - 8761:8080
+        environment:
+            - PROFILE_TAG=docker
+        volumes: 
+            - ./spring-eureka-server/target:/target
+        command: java -jar target/spring-eureka-server-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+
+    ####
+    sc-config-service:
+        image: openjdk-with-wfi:1.0
+        container_name: sc-config-server
+        restart: always
+        ports: 
+            - 8888:8080
+        environment:
+            - SERVER_PORT=8080
+            - EUREKA_URI=http://sc-discovery-service:8080/eureka
+#            - CONFIG_RESOURCE=native
+        volumes: 
+#            - ./config:/config
+            - ./spring-config-server/target:/target
+            - ./wait-for-it.sh:/wait-for-it.sh
+        command: bash ./wait-for-it.sh sc-discovery-service:8080 --strict -- java -jar target/spring-config-server-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+        depends_on: 
+            - sc-discovery-service
+
+    ###
+    sc-manager-service:
+        image: openjdk-with-wfi:1.0
+        restart: always
+        container_name: sc-manager-server
+        ports: 
+            - 8760:8080
+        environment: 
+            - CONFIG_SERVER_URI=http://sc-config-service:8080
+            - EUREKA_URI=http://sc-discovery-service:8080/eureka
+            - PROFILE_TAG=docker
+        volumes: 
+            - ./spring-cloud-manager/target:/target
+        command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-cloud-manager-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+        depends_on: 
+            - sc-config-service
+    
+    ###
+    sc-course-service:
+        image: openjdk-with-wfi:1.0
+        restart: always
+        container_name: sc-course-server
+        # ports: 
+        #     - 8081:8080
+        environment: 
+            - CONFIG_SERVER_URI=http://sc-config-service:8080
+            - EUREKA_URI=http://sc-discovery-service:8080/eureka
+            - DB_HOST=postgres-service
+            - DB_POST=5432
+            - DB_NAME=course
+            - DB_USER=postgres
+            - DB_PASSWORD=awhjw
+            - PROFILE_TAG=docker
+        volumes: 
+            - ./course-service/target:/target
+        command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/course-service-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+        depends_on: 
+            - sc-config-service
+
+    ###
+    sc-gateway-service:
+        image: openjdk-with-wfi:1.0
+        restart: always
+        container_name: sc-gateway-server
+        ports: 
+            - 8080:8080
+        environment: 
+            - CONFIG_SERVER_URI=http://sc-config-service:8080
+            - EUREKA_URI=http://sc-discovery-service:8080/eureka
+            - PROFILE_TAG=docker
+        volumes: 
+            - ./spring-cloud-gateway/target:/target
+        command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-cloud-gateway-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+        depends_on: 
+            - sc-config-service
+    
+    ###
+    sc-auth-service:
+        image: openjdk-with-wfi:1.0
+        restart: always
+        container_name: sc-auth-server
+        ports: 
+            - 7070:8080
+        environment: 
+            - CONFIG_SERVER_URI=http://sc-config-service:8080
+            - EUREKA_URI=http://sc-discovery-service:8080/eureka
+            - DB_HOST=postgres-service
+            - DB_POST=5432
+            - DB_NAME=oauth2
+            - DB_USER=postgres
+            - DB_PASSWORD=awhjw
+            - PROFILE_TAG=docker
+        volumes: 
+            - ./spring-auth-server/target:/target
+        command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-auth-server-0.0.1-SNAPSHOT.jar
+        networks: 
+            - my-spring-cloud
+        depends_on: 
+            - sc-config-service
+
+    ###
+    # sc-vault-service:
+    #     image: vault
+    #     container_name: sc-vault-server
+    #     ports:
+    #         - 8200:8200
+    #     volumes: 
+    #         - ./vault:/vault/file
+    #     environment: 
+    #         - VAULT_ADDR=http://127.0.0.1:8200
+    #         - 'VAULT_LOCAL_CONFIG={"api_addr": "http://127.0.0.1:8200", "listener": [{ "tcp": { "address": "0.0.0.0:8200", "tls_disable": 1 } } ], "storage": { "file": { "path": "/vault/file" } }, "max_lease_ttl": "10h", "default_lease_ttl": "10h", "cluster_name":"testcluster", "ui":true }'
+    #     networks: 
+    #         - my-spring-cloud
+    #     cap_add:
+    #         - IPC_LOCK
+    #     command: vault server -config=/vault/config/local.json
+
+    ###
+    # rabbitmq-service:
+    #     image: rabbitmq:3-management
+    #     container_name: rabbitmq-server
+    #     ports: 
+    #         - 15672:15672
+    #     networks: 
+    #         - my-spring-cloud
+networks: 
+    my-spring-cloud:
+
+volumes: 
+    postgres-data:
+        driver: local

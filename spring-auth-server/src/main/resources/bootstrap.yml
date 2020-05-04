@@ -2,7 +2,7 @@ spring:
   application:
     name: 'auth-service'
   profiles:
-    active: dev
+    active: ${PROFILE_TAG:dev}
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://localhost:8888}

@@ -1,6 +1,8 @@
 spring:
   application:
     name: 'manager-service'
+  profiles:
+    active: ${PROFILE_TAG:dev}
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://localhost:8888}
