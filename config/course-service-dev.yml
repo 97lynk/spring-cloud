@@ -2,7 +2,7 @@ spring:
   datasource:
     password: awhjw
     username: postgres
-    url: jdbc:postgresql://localhost:5432/course_db_dev?createDatabaseIfNotExist=true&useSSL=false
+    url: jdbc:postgresql://localhost:5432/course_dev?createDatabaseIfNotExist=true&useSSL=false
     jpa.hibernate.ddl-auto: update
 
 eureka:
