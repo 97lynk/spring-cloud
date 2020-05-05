@@ -6,9 +6,8 @@ services:
         container_name: postgres-server
         ports:
             - 5432:5432
-        environment: 
+        environment:
             - POSTGRES_PASSWORD=awhjw
-            - POSTGRES_DB=oauth2
         volumes: 
             - postgres-data:/var/lib/postgresql/data
         networks: 
@@ -42,7 +41,6 @@ services:
         volumes: 
 #            - ./config:/config
             - ./spring-config-server/target:/target
-            - ./wait-for-it.sh:/wait-for-it.sh
         command: bash ./wait-for-it.sh sc-discovery-service:8080 --strict -- java -jar target/spring-config-server-0.0.1-SNAPSHOT.jar
         networks: 
             - my-spring-cloud
@@ -56,10 +54,8 @@ services:
         container_name: sc-manager-server
         ports: 
             - 8760:8080
-        environment: 
-            - CONFIG_SERVER_URI=http://sc-config-service:8080
-            - EUREKA_URI=http://sc-discovery-service:8080/eureka
-            - PROFILE_TAG=docker
+        env_file:
+            - spring-cloud.env
         volumes: 
             - ./spring-cloud-manager/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-cloud-manager-0.0.1-SNAPSHOT.jar
@@ -73,23 +69,18 @@ services:
         image: openjdk-with-wfi:1.0
         restart: always
         container_name: sc-course-server
-        # ports: 
+        # ports:
         #     - 8081:8080
-        environment: 
-            - CONFIG_SERVER_URI=http://sc-config-service:8080
-            - EUREKA_URI=http://sc-discovery-service:8080/eureka
-            - DB_HOST=postgres-service
-            - DB_POST=5432
+        env_file:
+            - spring-cloud.env
+        environment:
             - DB_NAME=course
-            - DB_USER=postgres
-            - DB_PASSWORD=awhjw
-            - PROFILE_TAG=docker
-        volumes: 
+        volumes:
             - ./course-service/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/course-service-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
-        depends_on: 
+        depends_on:
             - sc-config-service
 
     ###
@@ -97,18 +88,16 @@ services:
         image: openjdk-with-wfi:1.0
         restart: always
         container_name: sc-gateway-server
-        ports: 
+        ports:
             - 8080:8080
-        environment: 
-            - CONFIG_SERVER_URI=http://sc-config-service:8080
-            - EUREKA_URI=http://sc-discovery-service:8080/eureka
-            - PROFILE_TAG=docker
-        volumes: 
+        env_file:
+            - spring-cloud.env
+        volumes:
             - ./spring-cloud-gateway/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-cloud-gateway-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
-        depends_on: 
+        depends_on:
             - sc-config-service
     
     ###
@@ -119,15 +108,10 @@ services:
         ports: 
             - 7070:8080
         environment: 
-            - CONFIG_SERVER_URI=http://sc-config-service:8080
-            - EUREKA_URI=http://sc-discovery-service:8080/eureka
-            - DB_HOST=postgres-service
-            - DB_POST=5432
             - DB_NAME=oauth2
-            - DB_USER=postgres
-            - DB_PASSWORD=awhjw
-            - PROFILE_TAG=docker
-        volumes: 
+        env_file:
+            - spring-cloud.env
+        volumes:
             - ./spring-auth-server/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-auth-server-0.0.1-SNAPSHOT.jar
         networks: 
