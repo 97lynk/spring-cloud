@@ -1,10 +1,11 @@
 package io.a97lynk.courseservice.controller;
 
-import io.a97lynk.courseservice.Page;
 import io.a97lynk.courseservice.entity.Course;
 import io.a97lynk.courseservice.service.CourseService;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +17,15 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    private final SqlSession sqlSession;
 
     @Autowired
-    public CourseController(CourseService courseService, SqlSession sqlSession) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-        this.sqlSession = sqlSession;
     }
 
     @GetMapping
-    public Page<Course> getPageCourse(@RequestParam(required = false, defaultValue = "0") int page,
-                                      @RequestParam(required = false, defaultValue = "10") int size) {
-        return courseService.getListCourse(Page.builder().page(page).size(size).build());
+    public Page<Course> getPageCourse(@PageableDefault Pageable pageable) {
+        return courseService.getListCourse(pageable);
     }
 
     @PostMapping

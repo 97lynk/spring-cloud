@@ -12,3 +12,16 @@ spring:
 
   flyway:
     locations: classpath:/db-migrate
+
+#spring:
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
+
+course-service:
+  rabbitmq:
+    queue: 'student-q'
+    exchange: 'delete-course-ex'
+    routing-key: 'student.*'
