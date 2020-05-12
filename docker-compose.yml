@@ -8,23 +8,23 @@ services:
             - 5432:5432
         environment:
             - POSTGRES_PASSWORD=awhjw
-        volumes: 
+        volumes:
             - postgres-data:/var/lib/postgresql/data
-        networks: 
+        networks:
             - my-spring-cloud
 
     ####
     sc-discovery-service:
         image: openjdk-with-wfi:1.0
         container_name: sc-eureka-server
-        ports: 
+        ports:
             - 8761:8080
         environment:
             - PROFILE_TAG=docker
-        volumes: 
+        volumes:
             - ./spring-eureka-server/target:/target
         command: java -jar target/spring-eureka-server-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
 
     ####
@@ -32,19 +32,19 @@ services:
         image: openjdk-with-wfi:1.0
         container_name: sc-config-server
         restart: always
-        ports: 
+        ports:
             - 8888:8080
         environment:
             - SERVER_PORT=8080
             - EUREKA_URI=http://sc-discovery-service:8080/eureka
-#            - CONFIG_RESOURCE=native
-        volumes: 
-#            - ./config:/config
+        #            - CONFIG_RESOURCE=native
+        volumes:
+            #            - ./config:/config
             - ./spring-config-server/target:/target
         command: bash ./wait-for-it.sh sc-discovery-service:8080 --strict -- java -jar target/spring-config-server-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
-        depends_on: 
+        depends_on:
             - sc-discovery-service
 
     ###
@@ -52,18 +52,18 @@ services:
         image: openjdk-with-wfi:1.0
         restart: always
         container_name: sc-manager-server
-        ports: 
+        ports:
             - 8760:8080
         env_file:
             - spring-cloud.env
-        volumes: 
+        volumes:
             - ./spring-cloud-manager/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-cloud-manager-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
-        depends_on: 
+        depends_on:
             - sc-config-service
-    
+
     ###
     sc-course-service:
         image: openjdk-with-wfi:1.0
@@ -99,24 +99,24 @@ services:
             - my-spring-cloud
         depends_on:
             - sc-config-service
-    
+
     ###
     sc-auth-service:
         image: openjdk-with-wfi:1.0
         restart: always
         container_name: sc-auth-server
-        ports: 
+        ports:
             - 7070:8080
-        environment: 
+        environment:
             - DB_NAME=oauth2
         env_file:
             - spring-cloud.env
         volumes:
             - ./spring-auth-server/target:/target
         command: bash ./wait-for-it.sh sc-config-service:8080 --strict -- java -jar target/spring-auth-server-0.0.1-SNAPSHOT.jar
-        networks: 
+        networks:
             - my-spring-cloud
-        depends_on: 
+        depends_on:
             - sc-config-service
 
     ###
@@ -125,12 +125,12 @@ services:
     #     container_name: sc-vault-server
     #     ports:
     #         - 8200:8200
-    #     volumes: 
+    #     volumes:
     #         - ./vault:/vault/file
-    #     environment: 
+    #     environment:
     #         - VAULT_ADDR=http://127.0.0.1:8200
     #         - 'VAULT_LOCAL_CONFIG={"api_addr": "http://127.0.0.1:8200", "listener": [{ "tcp": { "address": "0.0.0.0:8200", "tls_disable": 1 } } ], "storage": { "file": { "path": "/vault/file" } }, "max_lease_ttl": "10h", "default_lease_ttl": "10h", "cluster_name":"testcluster", "ui":true }'
-    #     networks: 
+    #     networks:
     #         - my-spring-cloud
     #     cap_add:
     #         - IPC_LOCK
@@ -141,13 +141,13 @@ services:
         image: rabbitmq:3-management
         container_name: rabbitmq-server
         ports:
-         - 15672:15672
-         - 5672:5672
+            - 15672:15672
+            - 5672:5672
         networks:
-         - my-spring-cloud
-networks: 
+            - my-spring-cloud
+networks:
     my-spring-cloud:
 
-volumes: 
+volumes:
     postgres-data:
         driver: local
