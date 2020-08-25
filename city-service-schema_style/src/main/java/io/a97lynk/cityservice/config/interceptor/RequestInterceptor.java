@@ -1,4 +1,4 @@
-package io.a97lynk.cityservice.config;
+package io.a97lynk.cityservice.config.interceptor;
 
 import io.a97lynk.cityservice.config.TenantContext;
 import org.springframework.stereotype.Component;

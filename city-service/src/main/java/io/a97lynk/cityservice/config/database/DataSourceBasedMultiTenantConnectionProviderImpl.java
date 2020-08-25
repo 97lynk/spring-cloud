@@ -13,6 +13,7 @@ import java.util.Map;
 @Component
 public class DataSourceBasedMultiTenantConnectionProviderImpl
         extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
+
     @Autowired
     private DataSource defaultDS;
 

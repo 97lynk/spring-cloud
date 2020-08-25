@@ -32,6 +32,7 @@ public class TenantDataSource implements Serializable {
         return dataSource;
     }
 
+    // load config database and init datasource
     @PostConstruct
     public Map<String, DataSource> getAll() {
         List<DataSourceConfig> configList = configRepo.findAll();
