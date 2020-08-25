@@ -27,8 +27,8 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         }
 
         TenantContext.setCurrentTenant(tenantID);
-        return super.preHandle(request, response, handler);
-//        return true;
+//        return super.preHandle(request, response, handler);
+        return true;
     }
 
     @Override
