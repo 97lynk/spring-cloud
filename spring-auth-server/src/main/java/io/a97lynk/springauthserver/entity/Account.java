@@ -20,4 +20,6 @@ public class Account {
 
     private List<Role> roles = new ArrayList<>();
 
+    private String tenantId;
+
 }

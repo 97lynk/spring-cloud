@@ -28,7 +28,11 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Account account = accountMapper.findAccountByUsername(s);
-        return new User(account.getUsername(), account.getPassword(), convertRoleToGrantedAuthority(account.getRoles()));
+        return User.builder()
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .authorities(convertRoleToGrantedAuthority(account.getRoles()))
+                .build();
     }
 
     private static List<GrantedAuthority> convertRoleToGrantedAuthority(List<Role> roles) {
