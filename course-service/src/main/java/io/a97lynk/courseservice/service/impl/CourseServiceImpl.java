@@ -1,7 +1,6 @@
 package io.a97lynk.courseservice.service.impl;
 
 import io.a97lynk.courseservice.repository.CourseRepository;
-import io.a97lynk.courseservice.config.Producer;
 import io.a97lynk.courseservice.entity.Course;
 import io.a97lynk.courseservice.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,10 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
-    private final Producer producer;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, Producer producer) {
+    public CourseServiceImpl(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.producer = producer;
     }
 
     @Override
@@ -30,7 +27,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course insertNewCourse(Course course) {
-        producer.send(course);
         course.setClosed(false);
         return courseRepository.save(course);
     }

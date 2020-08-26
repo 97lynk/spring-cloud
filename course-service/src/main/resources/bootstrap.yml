@@ -1,27 +1,33 @@
 spring:
-  application:
-    name: 'course-service'
-  profiles:
-    active: ${PROFILE_TAG:dev}
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URI:http://localhost:8888}
-      fail-fast: true
-      retry:
-        max-attempts: 10
+    application:
+        name: 'course-service'
+    profiles:
+        active: ${PROFILE_TAG:dev}
+    cloud:
+        config:
+            uri: ${CONFIG_SERVER_URI:http://localhost:8888}
+            fail-fast: true
+            retry:
+                max-attempts: 10
 
-  flyway:
-    locations: classpath:/db-migrate
+    flyway:
+        locations:
+            - classpath:/db-migrate
+            - classpath:/db-migrate
+        schemas:
+            - hutech
+            - hcmute
+        enabled: false
 
-#spring:
-  rabbitmq:
-    username: guest
-    password: guest
-    host: localhost
-    port: 5672
+    #spring:
+    rabbitmq:
+        username: guest
+        password: guest
+        host: localhost
+        port: 5672
 
 course-service:
-  rabbitmq:
-    queue: 'student-q'
-    exchange: 'delete-course-ex'
-    routing-key: 'student.*'
+    rabbitmq:
+        queue: 'student-q'
+        exchange: 'delete-course-ex'
+        routing-key: 'student.*'

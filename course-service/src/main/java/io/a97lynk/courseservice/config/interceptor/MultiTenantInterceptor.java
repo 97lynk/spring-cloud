@@ -13,8 +13,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Component
@@ -28,7 +26,9 @@ public class MultiTenantInterceptor extends HandlerInterceptorAdapter {
         System.out.println("In preHandle we are Intercepting the Request");
         System.out.println("____________________________________________");
         String requestURI = request.getRequestURI();
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION).replace(OAuth2AccessToken.BEARER_TYPE, "").trim();
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION)
+                .replace(OAuth2AccessToken.BEARER_TYPE, "")
+                .trim();
         String tenantID = new ObjectMapper().readTree(JwtHelper.decode(token).getClaims()).get("tenantId").asText();
         System.out.println("RequestURI::" + requestURI + " || Search for X-TenantID  :: " + tenantID);
         System.out.println("____________________________________________");

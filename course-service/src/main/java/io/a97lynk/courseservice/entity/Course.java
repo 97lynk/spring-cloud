@@ -24,6 +24,8 @@ public class Course implements Serializable {
 
     @Column(name = "noofmember")
     private int noOfMember;
+
+    private String description;
     
     private boolean closed;
 }
