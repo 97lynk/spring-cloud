@@ -19,10 +19,11 @@ security:
   oauth2:
     resource:
       jwt:
-        key-store: classpath:/key-for-jwt.jks
-        key-password: P@ss
-        key-alias: aliasname
-        key-store-password: pAss
+        key-uri: 'http://tuan:secret@localhost:7070/oauth/token_key'
+#        key-store: classpath:/key-for-jwt.jks
+#        key-password: P@ss
+#        key-alias: aliasname
+#        key-store-password: pAss
 
 zuul.routes:
   course-service:

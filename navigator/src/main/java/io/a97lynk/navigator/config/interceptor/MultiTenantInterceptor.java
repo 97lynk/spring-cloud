@@ -1,9 +1,11 @@
-package io.a97lynk.courseservice.config.interceptor;
+package io.a97lynk.navigator.config.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.a97lynk.courseservice.config.TenantContext;
+import io.a97lynk.navigator.config.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -21,10 +23,14 @@ public class MultiTenantInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    @Value("${spring.application.name}")
+    String name;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("In preHandle we are Intercepting the Request");
-        System.out.println("____________________________________________");
+        System.out.println("name="+ name);
+        System.out.println("In preHandle we are Intercepting the Request " + SecurityContextHolder.getContext());
+        System.out.println("____________________________________________" + SecurityContextHolder.getContext().getAuthentication());
         String requestURI = request.getRequestURI();
         String token = request.getHeader(HttpHeaders.AUTHORIZATION)
                 .replace(OAuth2AccessToken.BEARER_TYPE, "")

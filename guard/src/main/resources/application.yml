@@ -1,0 +1,12 @@
+
+security:
+    oauth2:
+        resource:
+            jwt:
+                key-store: classpath:/key-for-jwt.jks
+                key-password: P@ss
+                key-alias: aliasname
+                key-store-password: pAss
+spring:
+    application:
+        name: 'guard-module'

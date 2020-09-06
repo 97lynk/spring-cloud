@@ -1,4 +1,4 @@
-package io.a97lynk.courseservice.config;
+package io.a97lynk.navigator.config;
 
 public class TenantContext {
 

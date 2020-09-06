@@ -13,7 +13,7 @@ spring:
   application:
     name: 'config-service'
   profiles:
-    active: native, git
+    active: native
   cloud:
     config:
       server:

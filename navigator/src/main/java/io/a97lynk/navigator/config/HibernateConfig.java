@@ -1,15 +1,12 @@
-package io.a97lynk.courseservice.config;
+package io.a97lynk.navigator.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.flywaydb.core.Flyway;
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.dialect.PostgreSQL95Dialect;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
-import org.springframework.boot.autoconfigure.flyway.FlywayProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -18,11 +15,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+//import org.flywaydb.core.Flyway;
+
 @Configuration
-@EnableConfigurationProperties(FlywayProperties.class)
+//@EnableConfigurationProperties(FlywayProperties.class)
 @Slf4j
 public class HibernateConfig {
 
@@ -56,22 +54,4 @@ public class HibernateConfig {
     }
 
 
-    // manual migrate multiple schemas
-    @Bean
-    public List<String> initFlyway(FlywayProperties flywayProperties, DataSource dataSource) throws Exception {
-        List<String> schemas = flywayProperties.getSchemas();
-        for (int i = 0; i < schemas.size(); i++) {
-            log.info("Migrating data for schema: " + schemas.get(i));
-            Flyway flyway = Flyway.configure()
-                    .locations(flywayProperties.getLocations().get(i))
-                    .baselineOnMigrate(Boolean.TRUE)
-                    .dataSource(dataSource)
-                    .schemas(schemas.get(i))
-                    .load();
-
-            flyway.migrate();
-        }
-
-        return schemas;
-    }
 }
