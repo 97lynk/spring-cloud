@@ -10,14 +10,6 @@ spring:
             retry:
                 max-attempts: 10
 
-    flyway:
-        locations:
-            - classpath:/db-migrate
-            - classpath:/db-migrate
-        schemas:
-            - hutech
-            - hcmute
-        enabled: false
 
     #spring:
     rabbitmq:

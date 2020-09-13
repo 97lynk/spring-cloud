@@ -1,0 +1,27 @@
+spring:
+    h2.console:
+        enable: true
+        path: /h2-console
+        settings:
+            trace: false
+            web-allow-others: false
+    datasource:
+        password: sa
+        username: sa
+        url: jdbc:h2:mem:test;MODE=PostgreSQL;
+        data: classpath:db-migrate/test/student_data.sql
+        schema: classpath:db-migrate/test/student_schema.sql
+    #        jpa.hibernate.ddl-auto: update
+
+    flyway:
+        enabled: false
+        locations: classpath:/db-migrate/test
+security:
+    oauth2:
+        resource:
+            jwt:
+                key-store: classpath:/key-for-jwt.jks
+                key-password: P@ss
+                key-alias: aliasname
+                key-store-password: pAss
+

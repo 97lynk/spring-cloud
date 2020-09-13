@@ -17,10 +17,8 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-//import org.flywaydb.core.Flyway;
 
 @Configuration
-//@EnableConfigurationProperties(FlywayProperties.class)
 @Slf4j
 public class HibernateConfig {
 

@@ -1,13 +1,13 @@
 package io.a97lynk.studentservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Student {
 
     private int id;

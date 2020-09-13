@@ -1,9 +1,18 @@
-#spring:
-#    datasource:
-#      password: ${DB_PASSWORD:awhjw}
-#      username: ${DB_USER:postgres}
-#      url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:student_db}?createDatabaseIfNotExist=true&useSSL=false
-#      jpa.hibernate.ddl-auto: update
+spring:
+    datasource:
+        password: ${DB_PASSWORD:awhjw}
+        username: ${DB_USER:postgres}
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:student_dev}?createDatabaseIfNotExist=true&useSSL=false
+        jpa.hibernate.ddl-auto: update
+
+    flyway:
+        locations:
+            - classpath:/db-migrate
+            - classpath:/db-migrate
+        schemas:
+            - hutech
+            - hcmute
+        enabled: false
 #
 #  eureka:
 #    client:
@@ -38,10 +47,10 @@
 #        default-topic: 'student-mq'
 
 security:
- oauth2:
-   resource:
-     jwt:
-       key-store: classpath:/key-for-jwt.jks
-       key-password: 'P@ss'
-       key-alias: 'aliasname'
-       key-store-password: 'pAss'
+    oauth2:
+        resource:
+            jwt:
+                key-store: classpath:/key-for-jwt.jks
+                key-password: P@ss
+                key-alias: aliasname
+                key-store-password: pAss

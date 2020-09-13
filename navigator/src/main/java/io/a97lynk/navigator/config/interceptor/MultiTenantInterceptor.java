@@ -28,7 +28,7 @@ public class MultiTenantInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("name="+ name);
+        System.out.println("------------------------ name=" + name);
         System.out.println("In preHandle we are Intercepting the Request " + SecurityContextHolder.getContext());
         System.out.println("____________________________________________" + SecurityContextHolder.getContext().getAuthentication());
         String requestURI = request.getRequestURI();
