@@ -1,0 +1,21 @@
+server:
+  port: 8081
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://kt3.mysql.database.azure.com:3306/kt3_omos?useUnicode=true&characterEncoding=utf-8&useSSL=true&requireSSL=false
+    username: TraSua@kt3
+    password: kt3@mysql
+  application:
+    name: Account Service
+    jackson:
+    serialization:
+      time-zone: Asia/Ho_Chi_Minh
+      locale: vi_VN
