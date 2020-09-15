@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R extends BaseRepository<E>> implements BaseService<E, D> {
@@ -37,8 +36,20 @@ public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R
     }
 
     @Override
-    public D add(D d) {
-        validateToAdd(d);
+    public D searchById(Number id) {
+        return repository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(() -> new DataException("Not found"));
+    }
+
+    @Override
+    public void validateToInsert(D d) throws RuntimeException {
+
+    }
+
+    @Override
+    public D insert(D d) {
+        validateToInsert(d);
         E e = toEntity(d);
         e = repository.save(e);
         return toDto(e);
@@ -46,12 +57,12 @@ public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R
 
     @Override
     public void validateToUpdate(D d) throws RuntimeException {
-        if(d.getId() == null || repository.existsById(d.getId()))
+        if(d.getId() == null || !repository.existsById(d.getId()))
             throw new DataException(d.getClass().getSimpleName() + " not found");
     }
 
     @Override
-    public D updateById(Long id, D d) {
+    public D updateById(Number id, D d) {
         d.setId(id);
         validateToUpdate(d);
         E e = toEntity(d);
@@ -60,13 +71,13 @@ public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R
     }
 
     @Override
-    public void validateToDelete(Long id) throws RuntimeException {
-        if(id == null || repository.existsById(id))
+    public void validateToDelete(Number id) throws RuntimeException {
+        if(id == null || !repository.existsById(id))
             throw new DataException(" not found");
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Number id) {
         validateToDelete(id);
         repository.deleteById(id);
     }

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 @Data
 @Entity
-public class EmployeeEntity extends BaseEntity {
+public class EmployeeEntity extends BaseEntity<Long> {
 
     private String name;
 

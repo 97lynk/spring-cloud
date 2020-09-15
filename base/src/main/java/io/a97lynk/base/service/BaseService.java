@@ -16,16 +16,18 @@ public interface BaseService<E, D> {
 
     List<D> searchAll();
 
-    void validateToAdd(D d) throws RuntimeException;
+    D searchById(Number id);
 
-    D add(D d);
+    void validateToInsert(D d) throws RuntimeException;
+
+    D insert(D d);
 
     void validateToUpdate(D d) throws RuntimeException;
 
-    D updateById(Long id, D d);
+    D updateById(Number id, D d);
 
-    void validateToDelete(Long id) throws RuntimeException;
+    void validateToDelete(Number id) throws RuntimeException;
 
-    void deleteById(Long id);
+    void deleteById(Number id);
 
 }

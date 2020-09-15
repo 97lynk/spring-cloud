@@ -5,8 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class BaseDto implements Serializable {
+public class BaseDto<ID extends Number> implements Serializable {
 
-    protected Long id;
+    protected ID id;
 
 }

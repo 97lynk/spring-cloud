@@ -30,9 +30,5 @@ public class EmployeeServiceImpl extends BaseServiceImpl<EmployeeEntity, Employe
         return employeeEntity;
     }
 
-    @Override
-    public void validateToAdd(EmployeeDto employeeDto) throws RuntimeException {
-    }
-
 
 }
