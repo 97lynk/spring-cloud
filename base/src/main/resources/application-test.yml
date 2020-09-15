@@ -1,3 +1,4 @@
+
 spring:
     h2.console:
         enable: true
@@ -12,3 +13,5 @@ spring:
     jpa:
         hibernate:
             ddl-auto: update
+server:
+    port: 0

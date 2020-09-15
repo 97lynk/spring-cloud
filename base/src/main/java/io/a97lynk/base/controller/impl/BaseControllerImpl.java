@@ -3,10 +3,11 @@ package io.a97lynk.base.controller.impl;
 import io.a97lynk.base.controller.BaseController;
 import io.a97lynk.base.jpa.BaseDto;
 import io.a97lynk.base.service.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class BaseControllerImpl<D extends BaseDto, S extends BaseService> implem
 
     @Override
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public D create(@RequestBody D d) {
         return (D) service.insert(d);
     }
