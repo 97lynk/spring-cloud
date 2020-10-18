@@ -3,7 +3,6 @@ package io.a97lynk.base.controller;
 import io.a97lynk.base.jpa.BaseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

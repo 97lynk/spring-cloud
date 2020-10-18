@@ -57,7 +57,7 @@ public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R
 
     @Override
     public void validateToUpdate(D d) throws RuntimeException {
-        if(d.getId() == null || !repository.existsById(d.getId()))
+        if (d.getId() == null || !repository.existsById(d.getId()))
             throw new DataException(d.getClass().getSimpleName() + " not found");
     }
 
@@ -72,7 +72,7 @@ public abstract class BaseServiceImpl<E extends BaseEntity, D extends BaseDto, R
 
     @Override
     public void validateToDelete(Number id) throws RuntimeException {
-        if(id == null || !repository.existsById(id))
+        if (id == null || !repository.existsById(id))
             throw new DataException(" not found");
     }
 
