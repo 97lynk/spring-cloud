@@ -1,4 +1,4 @@
-package com.kt3.accountservice.model;
+package io.a97lynk.accountservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

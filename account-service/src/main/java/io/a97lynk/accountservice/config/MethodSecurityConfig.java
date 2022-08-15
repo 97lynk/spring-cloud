@@ -1,4 +1,4 @@
-package com.kt3.accountservice.config;
+package io.a97lynk.accountservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;

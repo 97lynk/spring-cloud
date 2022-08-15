@@ -1,4 +1,4 @@
-package com.kt3.accountservice.config;
+package io.a97lynk.accountservice.config;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;

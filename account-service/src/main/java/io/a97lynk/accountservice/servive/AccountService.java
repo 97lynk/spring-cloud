@@ -1,7 +1,7 @@
-package com.kt3.accountservice.servive;
+package io.a97lynk.accountservice.servive;
 
-import com.kt3.accountservice.model.Account;
-import com.kt3.accountservice.model.Profile;
+import io.a97lynk.accountservice.model.Account;
+import io.a97lynk.accountservice.model.Profile;
 
 import java.util.List;
 import java.util.NoSuchElementException;

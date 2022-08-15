@@ -27,6 +27,6 @@ INSERT INTO oauth_client_details
 
 INSERT INTO role (name) VALUES ('USER'), ('ADMIN');
 
-INSERT INTO account (username, password, fullName) VALUES ('tuan', '$2a$10$1VWszmAXLL4ZpX1w35S78uZivpJsR3WhZPkKczAxahbl6JewNIV8K', 'Nguyen Anh Tuan');
+INSERT INTO account (username, password, fullName) VALUES ('tuan', '$2a$10$.V3.KZZNFjEEF69CaB32Wu49yPboiqmneC2xaUbMrC3M9SqMd9wbi', 'Nguyen Anh Tuan');
 
 INSERT INTO role_account(role_id, account_id) VALUES (1, 1);

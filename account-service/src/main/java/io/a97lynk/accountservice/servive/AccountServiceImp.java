@@ -1,10 +1,10 @@
-package com.kt3.accountservice.servive;
+package io.a97lynk.accountservice.servive;
 
-import com.kt3.accountservice.model.Account;
-import com.kt3.accountservice.model.Profile;
-import com.kt3.accountservice.reponsitory.AccountRepository;
-import com.kt3.accountservice.reponsitory.ProfileReponsitory;
-import com.kt3.accountservice.reponsitory.RoleRepository;
+import io.a97lynk.accountservice.model.Account;
+import io.a97lynk.accountservice.model.Profile;
+import io.a97lynk.accountservice.reponsitory.AccountRepository;
+import io.a97lynk.accountservice.reponsitory.ProfileRepository;
+import io.a97lynk.accountservice.reponsitory.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AccountServiceImp implements AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private ProfileReponsitory profileReponsitory;
+    private ProfileRepository profileRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -28,7 +28,7 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public List<Profile> selectProfiles() {
-        return profileReponsitory.findAll();
+        return profileRepository.findAll();
     }
 
     @Override
@@ -38,36 +38,36 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public Profile selectProfileById(int id) {
-        return profileReponsitory.findOne(id);
+        return profileRepository.findOne(id);
     }
 
     @Override
     public Profile insertProfile(Profile profile) {
         Profile newProfile = new Profile(profile.getFirstName(), profile.getLastName(), profile.getBirthDay(),
                 profile.getEmailAddress(), profile.getAccount_id());
-        return profileReponsitory.save(newProfile);
+        return profileRepository.save(newProfile);
     }
 
     @Override
     public void deleteProfile(Integer id) throws NoSuchElementException {
-        if (!profileReponsitory.exists(id))
+        if (!profileRepository.exists(id))
             throw new NoSuchElementException("This profile does not exist");
 
-        profileReponsitory.delete(id);
+        profileRepository.delete(id);
     }
 
     @Override
     public Profile updateProfile(Profile profile) throws NoSuchElementException {
-        if (!profileReponsitory.exists(profile.getId()))
+        if (!profileRepository.exists(profile.getId()))
             throw new NoSuchElementException("This profile does not exist");
 
-        Profile oldProfile = profileReponsitory.findOne(profile.getId());
+        Profile oldProfile = profileRepository.findOne(profile.getId());
         oldProfile.setFirstName(profile.getFirstName());
         oldProfile.setLastName(profile.getLastName());
         oldProfile.setBirthDay(profile.getBirthDay());
         oldProfile.setEmailAddress(profile.getEmailAddress());
 
-        return profileReponsitory.save(oldProfile);
+        return profileRepository.save(oldProfile);
     }
 
     /////////////////////////////////////////////

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    password: awhjw
+    password: i6iF9HY3cI3A95iK2eL8e1xa0tsQI
     username: postgres
     url: jdbc:postgresql://localhost:5432/oauth2_dev?createDatabaseIfNotExist=true&useSSL=false
   jpa:

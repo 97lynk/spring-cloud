@@ -1,4 +1,4 @@
-package com.kt3.accountservice;
+package io.a97lynk.accountservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

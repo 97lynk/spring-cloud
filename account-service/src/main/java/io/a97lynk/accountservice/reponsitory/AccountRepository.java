@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kt3.accountservice.reponsitory;
+package io.a97lynk.accountservice.reponsitory;
 
-import com.kt3.accountservice.model.Account;
+import io.a97lynk.accountservice.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {

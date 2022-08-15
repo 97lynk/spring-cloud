@@ -1,4 +1,4 @@
-package com.kt3.accountservice.config;
+package io.a97lynk.accountservice.config;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;

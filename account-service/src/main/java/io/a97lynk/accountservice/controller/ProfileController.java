@@ -19,12 +19,12 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/profile")
 @PreAuthorize("#oauth2.hasScope('READ')")
-public class ProfileAPI {
+public class ProfileController {
 
     @Autowired
     private AccountService accountService;
 
-    private static final Logger logger = Logger.getLogger(ProfileAPI.class.getName());
+    private static final Logger logger = Logger.getLogger(ProfileController.class.getName());
 
     AbstractMap.SimpleEntry successMessage = new AbstractMap.SimpleEntry<>("message", "success");
 
